@@ -1,6 +1,6 @@
 Demo 2 — AI Chat RAG từ PDF (Spring Boot + Gemini)
 
-Ứng dụng cung cấp giao diện chat kiểu GPT để hỏi đáp theo nội dung PDF. Quy trình RAG: nạp PDF → tách đoạn (chunk) → tạo vector embedding (Gemini) → truy xuất top-k ngữ cảnh.
+Ứng dụng cung cấp hỏi đáp theo nội dung PDF. Quy trình RAG: Nạp PDF → Tách đoạn (chunk) → Tạo vector embedding (Gemini) → Truy xuất top-k ngữ cảnh.
 
 ✨ Tính năng
 
