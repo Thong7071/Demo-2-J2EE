@@ -127,6 +127,7 @@
     gap: 6px;
     margin-top: 6px;
     flex-wrap: wrap;
+    display: none;
   }
 
   .tag {
@@ -178,6 +179,11 @@
     padding: 10px;
   }
 
+  .inputbar:focus-within{
+    border-color:#3b82f6;
+    box-shadow:0 0 0 1px rgba(59,130,246,.35);
+  }
+
   .btn-icon {
     width: 36px;
     height: 36px;
@@ -193,15 +199,34 @@
     fill: var(--text);
   }
 
-  textarea {
-    flex: 1;
-    resize: none;
-    background: transparent;
-    border: 0;
-    outline: none;
-    color: var(--text);
-    max-height: 160px;
+  textarea{
+    flex:1;
+    resize:none;
+    background:transparent;
+    border:0; outline:none;
+    color:var(--text);
+    font-family: Inter, ui-sans-serif, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    font-size:16px;
+    line-height:1.6;
+    letter-spacing:.1px;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    caret-color:#fff;
+    padding:4px 0;
   }
+
+  textarea::placeholder{
+    color:#94a3b8;
+    opacity:.9;
+  }
+
+  textarea::selection{
+    background:rgba(59,130,246,.25);
+  }
+
+  .send:hover{ filter:brightness(.98); }
+  .send:focus{ outline:2px solid rgba(59,130,246,.35); outline-offset:2px; border-radius:999px; }
+  .send.pending:focus{ border-radius:8px; }
 
   .send {
     width: 36px;
@@ -328,7 +353,7 @@ function addErr(text){
 
 const DEFAULT_SUGGESTS = [
   'Tóm tắt tài liệu này.',
-  'Nêu 5 quan trọng nhất của tài liệu.',
+  'Nêu 5 ý quan trọng nhất của tài liệu.',
   'Liệt kê 3 thuật ngữ / cụm từ khóa quan trọng và giải thích ngắn gọn.',
 ];
 
@@ -447,12 +472,24 @@ function prettyAI(text){
 
 
 
+
 q.addEventListener('keydown', (e)=>{
   if(e.key==='Enter' && !e.shiftKey){ e.preventDefault(); sendQuestion(); }
 });
 
 
 addMsg('Xin chào! Tôi là AI Assistant được hỗ trợ bởi Gemini. Hãy bấm dấu + để tải PDF.');
+
+
+function autosize(){
+  q.style.height = '0px';
+  const max = 200;
+  q.style.height = Math.min(q.scrollHeight, max) + 'px';
+}
+q.addEventListener('input', autosize);
+window.addEventListener('load', autosize);
+
+
 </script>
 </body>
 </html>
