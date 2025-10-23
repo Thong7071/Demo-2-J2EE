@@ -8,14 +8,10 @@ Quy trình RAG: Nạp PDF → Tách đoạn (chunk) → Tạo vector embedding (
 
 - ✅ **Upload & Reindex PDF**: Chọn file là tự trích văn bản → chunk → embedding.
 - ✅ **RAG**: Truy xuất **top-K** đoạn liên quan, dựng **context** và **prompt**.
-- ✅ **UI**: Nút "+" nạp PDF, bong bóng AI trái – Người dùng phải.
-- ✅ **Web Interface**: Giao diện web đơn giản và thân thiện
-- ✅ **REST API gọn**: API endpoints để tương tác với chatbot
-- ✅ **UTF-8 Support**: Hỗ trợ đầy đủ tiếng Việt
-- ✅ **Error Handling**: Xử lý lỗi thân thiện và chi tiết
-
-
-
+- ✅ **Web Interface**: Giao diện web đơn giản và thân thiện.
+- ✅ **REST API gọn**: API endpoints để tương tác với chatbot.
+- ✅ **UTF-8 Support**: Hỗ trợ đầy đủ tiếng Việt.
+- ✅ **Error Handling**: Xử lý lỗi thân thiện và chi tiết.
 
 📦 Tech stack
 
