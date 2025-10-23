@@ -18,67 +18,124 @@ Demo 2 — AI Chat RAG từ PDF (Spring Boot + Gemini)
 
 ⚙️ Cấu hình & chạy
 
-1. Cấu hình Gemini AI
+### 1. Cấu hình Gemini AI
 
 Bạn cần có Gemini API Key từ Google AI Studio:
 
-    1. Truy cập Google AI Studio
+    1. Truy cập [Google AI Studio](https://makersuite.google.com/app/apikey)
     2. Tạo API key mới
     3. Copy API key để sử dụng
 
-2. Copy file config-template.properties thành .env:
+**Cách 2: Set environment variables trực tiếp**
 
-   cp config-template.properties .env
+```bash
+# Windows (PowerShell)
+$env:GEMINI_API_KEY="your_actual_gemini_api_key_here"
 
-3. Chạy ứng dụng
+# Linux/Mac
+export GEMINI_API_KEY="your_actual_gemini_api_key_here"
+```
 
+**Cách 3: Cập nhật trực tiếp trong application.properties**
+
+```properties
+gemini.api.key=your_actual_gemini_api_key_here
+gemini.api.url=https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent
+```
+      cp config-template.properties .env
+
+> ⚠️ **Lưu ý bảo mật**: Không commit API key vào Git. File `.env` đã được thêm vào `.gitignore`.
+
+### 3. Chạy ứng dụng
+
+```bash
 # Chạy với Maven (Windows)
-
 mvn spring-boot:run
 
 # Chạy với Maven (Linux/Mac)
-
 ./mvnw spring-boot:run
 
 # Hoặc build và chạy
-
 mvn clean package
 java -jar target/demo-0.0.1-SNAPSHOT.jar
+```
 
-4. Truy cập ứng dụng
-   Mở trình duyệt và truy cập: http://localhost:8080
+### 4. Truy cập ứng dụng
+
+Mở trình duyệt và truy cập: **http://localhost:8080**
+
+## 🧪 Test Demo
+
+### Test Upload (nạp PDF)
+
+```
+Bấm "+" chọn file PDF → Đang nạp file.
+
+Khi xong, trạng thái hiển thị: Đã nạp: <tên file>
+
+```
+
+### Test Hỏi–Đáp dựa vào PDF (RAG)
+
+```
+User: "Tóm tắt ngắn tài liệu này."
+Bot: "…(tóm tắt)…"
+
+User: "Nêu 5 ý quan trọng nhất của tài liệu."
+Bot: 
+1) …
+2) …
+3) …
+4) …
+5) …
+
+User: "Liệt kê 3 thuật ngữ/cụm từ khóa quan trọng và giải thích ngắn gọn."
+Bot:
+- **Thuật ngữ A**: …
+- **Thuật ngữ B**: …
+- **Thuật ngữ C**: …
+
+```
 
 📁 Cấu trúc dự án
 
 ```
-src/
- ├─ main/java/com/example/demo/
- │   ├─ config/
- │   │   ├─ CorsConfig.java
- │   │   └─ (tuỳ chọn) SecurityConfig.java       tắt CSRF cho /api/
- │   ├─ controller/
- │   │   ├─ ChatController.java                  /api/rag/reindex, /ask
- │   │   └─ GlobalExceptionHandler.java
- │   ├─ model/
- │   │   ├─ AskRequest.java
- │   │   ├─ AskResponse.java
- │   │   └─ ReindexResponse.java
- │   └─ service/
- │       ├─ PdfLoader.java
- │       ├─ TextChunker.java
- │       ├─ GeminiRestService.java
- │       ├─ VectorMath.java, VectorStore.java
- │       ├─ IndexService.java
- │       └─ RagService.java
- └─ main/resources/
-     ├─ static/index.html                         UI chat kiểu GPT + quick prompts
-     └─ application.properties
+demo-2/
+├── src/main/java/com/example/demo/
+│   ├── config/
+│   │   └── CorsConfig.java               # Cấu hình CORS
+│   ├── controller/
+│   │   ├── ChatController.java           # REST API endpoints
+│   │   └── GlobalExceptionHandler.java   # Bắt lỗi chung, trả JSON gọn cho UI
+│   ├── model/
+│   │   ├── AskRequest.java               # question
+│   │   ├── AskResponse.java              # answer, sources[]
+│   │   └── ReindexResponse.java          # chunks, vectors, millis
+│   ├── service/
+│   │   ├── DemoApplication.java          # Main Spring Boot application
+│   │   ├── GeminiRestService.java        # Gọi Gemini: chat + embedding
+│   │   ├── IndexService.java             # Upload & Reindex PDF → vectors
+│   │   ├── IntentDetector.java           # Nhận diện intent
+│   │   ├── PdfLoader.java                # Trích văn bản từ PDF
+│   │   ├── RagService.java               # Truy xuất PDF, dùng Gemini để trả lời
+│   │   ├── TextChunker.java              # Chia chunk + overlap
+│   │   ├── VectorMath.java               # cosine, dot, norm
+│   │   └── VectorStore.java              # Lưu vector in-memory, topK()
+│
+├── src/main/resources/
+│   ├── static/
+│   │   └── index.html                    # Web interface
+│   └── application.properties            # Cấu hình ứng dụng
+│
+├── config-template.properties            # Mẫu để tạo .env
+├── .gitignore                            # Git ignore file
+├── pom.xml                               # Maven dependencies & plugins
+└── README.md                             # Tài liệu dự án
+
 ```
+## 📦Dependencies chính
 
-🧪 Kịch bản kiểm thử nhanh
-
-- "Tóm tắt ngắn tài liệu này (3–5 câu)."
-
-- "Tóm tắt 5 ý chính quan trọng nhất của tài liệu."
-
-- "Liệt kê 3 thuật ngữ/cụm từ khóa quan trọng và giải thích ngắn gọn."
+- **Spring Boot 3.5.6**: Framework chính
+- **Spring Web**: REST API và web interface
+- **Java 17**: Runtime environment
+- **Maven**: Build tool và dependency management

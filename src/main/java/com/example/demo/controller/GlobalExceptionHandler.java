@@ -33,7 +33,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Map<String, Object>> handleMaxUpload(MaxUploadSizeExceededException ex) {
         Map<String, Object> body = new HashMap<>();
         body.put("error", "Payload Too Large");
-        body.put("message", "File vượt quá giới hạn cho phép. Hãy nén/giảm dung lượng hoặc tăng giới hạn server.");
+        body.put("message", "File vượt quá giới hạn cho phép. Hãy giảm dung lượng hoặc tăng giới hạn server.");
         return ResponseEntity.status(413).body(body);
     }
 }

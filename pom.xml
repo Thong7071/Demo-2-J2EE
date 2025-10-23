@@ -6,7 +6,14 @@
   <artifactId>demo-2-rag</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>demo-2-rag</name>
-  <description>Demo 2 - RAG (PDF → chunks → embeddings → retrieve → Gemini chat)</description>
+  <description>Demo 2 - RAG</description>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.5.6</version>
+		<relativePath/>
+	</parent>
 
   <properties>
     <java.version>17</java.version>
@@ -51,10 +58,6 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-security</artifactId>
     </dependency>
     <dependency>
       <groupId>me.paulschwarz</groupId>

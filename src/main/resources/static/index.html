@@ -280,7 +280,7 @@
 <div class="wrap">
   <header>
     <div class="logo">AI</div>
-    <div><b>AI Assistant</b><div class="small">Chat với kiến thức từ PDF • Gemini</div></div>
+    <div><b>AI Assistant</b><div class="small">Chat với kiến thức từ PDF - Gemini</div></div>
   </header>
 
   <main>
@@ -388,10 +388,9 @@ pdf.onchange = async ()=>{
     const js = await res.json();
     if(res.ok){
       indexed = true;
-      footInfo.textContent = `Đã nạp: ${file.name} • chunks=${js.chunks} • vectors=${js.vectors} • ${js.millis}ms`;
+      footInfo.textContent = `Đã nạp: ${file.name}`;
       addMsg('Hệ thống đã Upload, bạn có thể đặt câu hỏi ngay');
       showToast('Upload thành công ✅');
-      showSuggest();
     }else{
       addErr('Lỗi upload: '+(js.message||js.error||res.status));
       showToast('Upload thất bại ❌');
