@@ -24,11 +24,11 @@ Quy trình RAG: Nạp PDF → Tách đoạn (chunk) → Tạo vector embedding (
 
 ### 1. Cấu hình Gemini AI
 
-Bạn cần có Gemini API Key từ Google AI Studio:
+Bạn cần có **Gemini API Key** từ Google AI Studio:
 
-    1. Truy cập [Google AI Studio](https://makersuite.google.com/app/apikey)
-    2. Tạo API key mới
-    3. Copy API key để sử dụng
+1. Truy cập [Google AI Studio](https://makersuite.google.com/app/apikey)
+2. Tạo API key mới
+3. Copy API key để sử dụng
 
 **Cách 2: Set environment variables trực tiếp**
 
