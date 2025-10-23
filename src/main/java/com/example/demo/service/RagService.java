@@ -29,9 +29,8 @@ public class RagService {
     public AskResponse ask(String question) throws Exception {
         if (store.size() == 0) {
             return new AskResponse(
-                "Chưa upload dữ liệu PDF.",
-                List.of()
-            );
+                    "Chưa upload dữ liệu PDF.",
+                    List.of());
         }
 
         Hint hint = IntentDetector.detect(question);
@@ -52,14 +51,15 @@ public class RagService {
             String textLower = s.text().toLowerCase(Locale.ROOT);
 
             if (sec != null) {
-                if (textLower.contains(sec)) boost += 0.08;
+                if (textLower.contains(sec))
+                    boost += 0.08;
                 if (sec.contains("mở đầu") &&
-                    (textLower.contains("mở đầu") || textLower.contains("introduction"))) {
+                        (textLower.contains("mở đầu") || textLower.contains("introduction"))) {
                     boost += 0.06;
                 }
             }
             if (hint.intent == Intent.DEFINE && hint.term != null &&
-                textLower.contains(hint.term.toLowerCase(Locale.ROOT))) {
+                    textLower.contains(hint.term.toLowerCase(Locale.ROOT))) {
                 boost += 0.12;
             }
             rescored.add(new VectorStore.Scored(s.id(), s.text(), s.score() + boost));
@@ -75,8 +75,8 @@ public class RagService {
         StringBuilder ctx = new StringBuilder();
         for (VectorStore.Scored s : hits) {
             ctx.append("\n[Chunk #").append(s.id())
-               .append(" / score=").append(String.format("%.3f", s.score()))
-               .append("]\n").append(s.text()).append("\n");
+                    .append(" / score=").append(String.format("%.3f", s.score()))
+                    .append("]\n").append(s.text()).append("\n");
         }
 
         String system = switch (hint.intent) {
@@ -116,13 +116,13 @@ public class RagService {
                 + "\n\n=== CONTEXT START ===\n" + ctx + "=== CONTEXT END ===\n\n"
                 + formatPart + "Question: " + question + "\nAnswer:";
 
-        String answer = gemini.chat(prompt);
-
-        return new AskResponse(
-            answer,
-            hits.stream()
-                .map(s -> new AskResponse.SourceScore(s.id(), s.score()))
-                .collect(Collectors.toList())
-        );
+        try {
+            String answer = gemini.chat(prompt);
+            return new AskResponse(
+                    answer,
+                    hits.stream().map(s -> new AskResponse.SourceScore(s.id(), s.score())).toList());
+        } catch (org.springframework.web.client.HttpServerErrorException.ServiceUnavailable e) {
+            return new AskResponse("AI đang quá tải. Bạn hãy đặt lại câu hỏi.", List.of());
+        }
     }
 }
