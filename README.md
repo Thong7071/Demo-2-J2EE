@@ -1,13 +1,21 @@
 Demo 2 — AI Chat RAG từ PDF (Spring Boot + Gemini)
 
-Ứng dụng cung cấp hỏi đáp theo nội dung PDF. Quy trình RAG: Nạp PDF → Tách đoạn (chunk) → Tạo vector embedding (Gemini) → Truy xuất top-k ngữ cảnh.
+Ứng dụng cung cấp hỏi đáp theo nội dung PDF.
+
+Quy trình RAG: Nạp PDF → Tách đoạn (chunk) → Tạo vector embedding (Gemini) → Truy xuất top-k ngữ cảnh.
 
 ✨ Tính năng
 
-- Upload & Reindex tự động: bấm nút "+" chọn PDF; hệ thống tự upload, trích văn bản, cắt chunk và embedding.
-- Chat kiểu GPT: ô nhập đơn giản; nút gửi mũi tên. Khi đang xử lý, nút gửi chuyển hình vuông (pending) và tự trở lại tròn khi xong.
-- Gợi ý câu hỏi: hiển thị các quick prompts phía trên chatbox ngay sau khi reindex.
-- Định dạng đầu ra: tự nhận bullets/đánh số, xuống dòng dễ đọc, hỗ trợ bold.
+- ✅ **Upload & Reindex PDF**: Chọn file là tự trích văn bản → chunk → embedding.
+- ✅ **RAG**: Truy xuất **top-K** đoạn liên quan, dựng **context** và **prompt**.
+- ✅ **UI**: Nút "+" nạp PDF, bong bóng AI trái – Người dùng phải.
+- ✅ **Web Interface**: Giao diện web đơn giản và thân thiện
+- ✅ **REST API gọn**: API endpoints để tương tác với chatbot
+- ✅ **UTF-8 Support**: Hỗ trợ đầy đủ tiếng Việt
+- ✅ **Error Handling**: Xử lý lỗi thân thiện và chi tiết
+
+
+
 
 📦 Tech stack
 
@@ -66,7 +74,7 @@ Mở trình duyệt và truy cập: **http://localhost:8080**
 
 ## 🧪 Test Demo
 
-### Test Upload (nạp PDF)
+### Test Upload & Reindex (nạp PDF)
 
 ```
 Bấm "+" chọn file PDF → Đang nạp file.
@@ -75,11 +83,11 @@ Khi xong, trạng thái hiển thị: Đã nạp: <tên file>
 
 ```
 
-### Test Hỏi–Đáp dựa vào PDF (RAG)
+### Test Hỏi – Đáp dựa vào PDF (RAG)
 
 ```
 User: "Tóm tắt ngắn tài liệu này."
-Bot: "…(tóm tắt)…"
+Bot: "…(Tóm tắt)…"
 
 User: "Nêu 5 ý quan trọng nhất của tài liệu."
 Bot: 
